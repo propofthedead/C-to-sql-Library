@@ -11,7 +11,7 @@ namespace CsharpToSqlLibrary
 	{
 		static void Main(string[] args)
 		{
-			UsersController users = new UsersController();
+			UsersController UserCtrl= new UsersController(@"DESKTOP-7KOO68T\SQLEXPRESS","prs");
 
 		}
 	}
