@@ -12,11 +12,14 @@ namespace SqlLibrary
 		SqlConnection conn = null;
 		SqlCommand cmd = new SqlCommand();
 
-
-		public IEnumerable<User> List() {
-			string sql = "Select * from [User];";
+		private void SetupCommand(SqlConnection conn, string sql) {
 			cmd.Connection = conn;
 			cmd.CommandText = sql;
+			cmd.Parameters.Clear();
+		}
+		public IEnumerable<User> List() {
+			string sql = "Select * from [User];";
+			SetupCommand(conn, sql);
 			List<User> users = new List<User>();
 			SqlDataReader reader=	cmd.ExecuteReader();
 			while (reader.Read()) {
@@ -28,11 +31,11 @@ namespace SqlLibrary
 		}
 		public User Get(int id) {
 			string sql = "select * from [User] where Id=@id ";
-			cmd.Connection = conn;
-			cmd.CommandText = sql;
+			SetupCommand(conn, sql);
 			cmd.Parameters.Add(new SqlParameter("@id", id));
 			SqlDataReader reader = cmd.ExecuteReader();
 			if (reader.HasRows == false) {
+				reader.Close();
 				return null;
 			}
 			reader.Read();
@@ -41,7 +44,21 @@ namespace SqlLibrary
 			return targetUser;
 		}
 		public bool Create(User user) {
-			return false;
+			string sql = "INSERT into [User] " +
+					" ( Username, Password, Firstname, Lastname, phone, email, IsReviewer, IsAdmin) " +
+					" VALUES" +
+					" ( @Username, @Password, @Firstname, @Lastname, @phone, @email, @IsReviewer, @IsAdmin) ";
+			SetupCommand(conn, sql);
+			cmd.Parameters.Add(new SqlParameter("@Username", user.Username));
+			cmd.Parameters.Add(new SqlParameter("@Password", user.Password));
+			cmd.Parameters.Add(new SqlParameter("@Firstname", user.Firstname));
+			cmd.Parameters.Add(new SqlParameter("@Lastname", user.Lastname));
+			cmd.Parameters.Add(new SqlParameter("@phone", user.Phone));
+			cmd.Parameters.Add(new SqlParameter("@email", user.Email));
+			cmd.Parameters.Add(new SqlParameter("@IsReviewer", user.IsReviewer));
+			cmd.Parameters.Add(new SqlParameter("@IsAdmin", user.IsAdmin));
+			int recsaffected = cmd.ExecuteNonQuery();
+			return (recsaffected==1);
 		}
 		public bool Change(User user) {
 			return false;
