@@ -17,12 +17,14 @@ namespace SqlLibrary
 			string sql = "Select * from [User];";
 			cmd.Connection = conn;
 			cmd.CommandText = sql;
+			List<User> users = new List<User>();
 			SqlDataReader reader=	cmd.ExecuteReader();
 			while (reader.Read()) {
 				User user = new User(reader);
+				users.Add(user);
 			}
 
-			return new List<User>();
+			return users;
 		}
 		public User Get(int id) {
 			return null;
@@ -38,7 +40,7 @@ namespace SqlLibrary
 		}
 
 		private SqlConnection CreateAndOpenConection(string server, string database) {
-			string connStr = $"server={server};database={database};";
+			string connStr = $"server={server}; database={database};Trusted_connection=true;";
 			SqlConnection conn = new SqlConnection(connStr);
 			conn.Open();
 			if (conn.State != System.Data.ConnectionState.Open) {
@@ -46,9 +48,10 @@ namespace SqlLibrary
 			}
 			return conn;
 		}
-		private void CloseConnection(SqlConnection conn) {
+		public void CloseConnection() {
 			if (conn !=null &&conn.State == System.Data.ConnectionState.Open) {
 				conn.Close();
+				conn = null;
 			}
 		}
 		public UsersController() {
