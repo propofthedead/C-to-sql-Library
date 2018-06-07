@@ -9,7 +9,19 @@ namespace SqlLibrary
 {
     public class UsersController
     {
+		SqlConnection conn = null;
+		SqlCommand cmd = new SqlCommand();
+
+
 		public IEnumerable<User> List() {
+			string sql = "Select * from [User];";
+			cmd.Connection = conn;
+			cmd.CommandText = sql;
+			SqlDataReader reader=	cmd.ExecuteReader();
+			while (reader.Read()) {
+				User user = new User(reader);
+			}
+
 			return new List<User>();
 		}
 		public User Get(int id) {
@@ -43,7 +55,7 @@ namespace SqlLibrary
 
 		}
 		public UsersController(string server, string database) {
-			SqlConnection conn=	CreateAndOpenConection(server, database);
+			this.conn=	CreateAndOpenConection(server, database);
 		}
     }
 }
