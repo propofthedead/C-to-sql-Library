@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SqlLibrary;
 
 namespace CsharpToSqlLibrary
 {
@@ -10,6 +11,8 @@ namespace CsharpToSqlLibrary
 	{
 		static void Main(string[] args)
 		{
+			UsersController users = new UsersController();
+
 		}
 	}
 }

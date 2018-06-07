@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace SqlLibrary
 {
-    public class User
+    public class UsersController
     {
-
+		public IEnumerator<user> List() {
+			return null;
+		}
+		public User Get(int id) {
+			return null;
+		}
+		public bool Create(User user) {
+			return false;
+		}
+		public bool Change(User user) {
+			return false;
+		}
+		public bool Remove(User user) {
+			return false;
+		}
     }
 }
