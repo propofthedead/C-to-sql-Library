@@ -23,11 +23,22 @@ namespace SqlLibrary
 				User user = new User(reader);
 				users.Add(user);
 			}
-
+			reader.Close();
 			return users;
 		}
 		public User Get(int id) {
-			return null;
+			string sql = "select * from [User] where Id=@id ";
+			cmd.Connection = conn;
+			cmd.CommandText = sql;
+			cmd.Parameters.Add(new SqlParameter("@id", id));
+			SqlDataReader reader = cmd.ExecuteReader();
+			if (reader.HasRows == false) {
+				return null;
+			}
+			reader.Read();
+			User targetUser = new User(reader);
+			reader.Close();
+			return targetUser;
 		}
 		public bool Create(User user) {
 			return false;
@@ -38,7 +49,6 @@ namespace SqlLibrary
 		public bool Remove(User user) {
 			return false;
 		}
-
 		private SqlConnection CreateAndOpenConection(string server, string database) {
 			string connStr = $"server={server}; database={database};Trusted_connection=true;";
 			SqlConnection conn = new SqlConnection(connStr);

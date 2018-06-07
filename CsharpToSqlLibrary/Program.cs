@@ -16,6 +16,12 @@ namespace CsharpToSqlLibrary
 			foreach (User user in users) {
 				Console.WriteLine($"{user.Firstname} {user.Lastname}");
 			}
+			User tuser = UserCtrl.Get(5);
+			if (tuser == null) {
+				Console.WriteLine("User not found");
+			} else {
+				Console.WriteLine($"{tuser.Firstname} {tuser.Lastname}");
+			}
 			UserCtrl.CloseConnection();
 		}
 	}
