@@ -87,7 +87,11 @@ namespace SqlLibrary
 			return (recsaffected == 1);
 		}
 		public bool Remove(User user) {
-			return false;
+			string sql = "DELETE from [User] where Id = @id";
+			SetupCommand(conn, sql);
+			cmd.Parameters.Add(new SqlParameter("@id", user.Id));
+			int recsaffected = cmd.ExecuteNonQuery();
+			return (recsaffected==1);
 		}
 		private SqlConnection CreateAndOpenConection(string server, string database) {
 			string connStr = $"server={server}; database={database};Trusted_connection=true;";
