@@ -23,15 +23,17 @@ namespace CsharpToSqlLibrary
 				Console.WriteLine($"{tuser.Firstname} {tuser.Lastname}");
 			}
 			User newUser = new User();
-			newUser.Username = "raphbaryle";
-			newUser.Password = "youmay";
-			newUser.Firstname = "disgaea";
-			newUser.Lastname = "hellschool";
+			newUser.Id = 10;
+			newUser.Username = "raph";
+			newUser.Password = "yoy";
+			newUser.Firstname = "disgaea3";
+			newUser.Lastname = "highschool";
 			newUser.Phone = "513-489-3145";
 			newUser.Email = "blach @ adad";
 			newUser.IsReviewer = true;
 			newUser.IsAdmin = false;
-			UserCtrl.Create(newUser);
+			newUser.Active = true;
+			UserCtrl.Change(newUser);
 			IEnumerable<User> newusers = UserCtrl.List();
 			foreach (User user in newusers) {
 				Console.WriteLine($"{user.Firstname} {user.Lastname}");

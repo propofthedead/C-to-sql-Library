@@ -61,7 +61,30 @@ namespace SqlLibrary
 			return (recsaffected==1);
 		}
 		public bool Change(User user) {
-			return false;
+			string sql = "UPDATE [User] set " +
+					" Username = @Username, " +
+					" Password = @Password, " +
+					" Firstname= @Firstname, " +
+					" Lastname= @Lastname, " +
+					" phone= @phone, " +
+					" email=@email, " +
+					"IsReviewer = @IsReviewer, "+
+					"IsAdmin= @IsAdmin, "+
+					" Active= @Active "+
+					"WHERE Id= @id";
+			SetupCommand(conn, sql);
+			cmd.Parameters.Add(new SqlParameter("@id", user.Id));
+			cmd.Parameters.Add(new SqlParameter("@Username", user.Username));
+			cmd.Parameters.Add(new SqlParameter("@Password", user.Password));
+			cmd.Parameters.Add(new SqlParameter("@Firstname", user.Firstname));
+			cmd.Parameters.Add(new SqlParameter("@Lastname", user.Lastname));
+			cmd.Parameters.Add(new SqlParameter("@phone", user.Phone));
+			cmd.Parameters.Add(new SqlParameter("@email", user.Email));
+			cmd.Parameters.Add(new SqlParameter("@IsReviewer", user.IsReviewer));
+			cmd.Parameters.Add(new SqlParameter("@IsAdmin", user.IsAdmin));
+			cmd.Parameters.Add(new SqlParameter("@Active", user.Active));
+			int recsaffected = cmd.ExecuteNonQuery();
+			return (recsaffected == 1);
 		}
 		public bool Remove(User user) {
 			return false;
