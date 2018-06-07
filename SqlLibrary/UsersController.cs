@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SqlLibrary
 {
-    public class Class1
+    public class User
     {
+
     }
 }
