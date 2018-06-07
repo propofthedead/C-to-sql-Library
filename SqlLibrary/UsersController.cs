@@ -8,7 +8,7 @@ namespace SqlLibrary
 {
     public class UsersController
     {
-		public IEnumerator<user> List() {
+		public IEnumerator<User> List() {
 			return null;
 		}
 		public User Get(int id) {
